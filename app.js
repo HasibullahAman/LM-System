@@ -3,7 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const expHbs = requier('express3-handlebars');
+const expHbs = require('express3-handlebars');
 var indexRouter = require('./routes/index');
 var app = express();
 app.use(logger('dev'));
@@ -14,13 +14,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 
+app.engine('hbs', expHbs({ defaultLayout: 'layout', extname: '.hbs' }));
+app.set('view engine', 'hbs');
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(functiorn(err, req, res, next) {
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
